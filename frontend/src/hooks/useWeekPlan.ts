@@ -114,7 +114,7 @@ export function useWeekPlan(year: number, week: number) {
     groupLabel?: GroupLabel
   ): Promise<PlanEntry | null> => {
     try {
-      const updatedEntry = await UpdatePlanEntry(entryId, productId, customText, groupLabel);
+      const updatedEntry = await UpdatePlanEntry(entryId, 0, '', 0, productId ?? null, customText ?? null, groupLabel ?? null);
       
       // State aktualisieren
       setWeekPlan(prev => prev ? {
@@ -134,7 +134,7 @@ export function useWeekPlan(year: number, week: number) {
     if (!weekPlan) return false;
     
     try {
-      await SetSpecialDay(weekPlan.id, day, type, label);
+      await SetSpecialDay(weekPlan.id, day, type, label ?? '');
       
       // State aktualisieren
       const newSpecialDay: SpecialDay = {

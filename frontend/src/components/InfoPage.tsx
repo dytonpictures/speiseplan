@@ -42,7 +42,7 @@ export function InfoPage() {
     setError(null);
     
     try {
-      await DownloadUpdate(updateInfo.download_url);
+      await DownloadUpdate();
       setDownloadComplete(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Fehler beim Herunterladen des Updates');

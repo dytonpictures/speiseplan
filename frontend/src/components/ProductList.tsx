@@ -7,9 +7,9 @@ interface ProductListProps {
   products: Product[];
   allergens: Allergen[];
   additives: Additive[];
-  onCreateProduct: (data: any) => Promise<void>;
-  onUpdateProduct: (id: number, data: any) => Promise<void>;
-  onDeleteProduct: (id: number) => Promise<void>;
+  onCreateProduct: (data: any) => Promise<any>;
+  onUpdateProduct: (id: number, data: any) => Promise<any>;
+  onDeleteProduct: (id: number) => Promise<boolean | void>;
   loading?: boolean;
 }
 

@@ -219,7 +219,7 @@ export function WeekPlanner({ year, week, className = '' }: WeekPlannerProps) {
                   <div class="meal-title">Frühstück</div>
                   ${fruehstueckEntries.map(entry => `
                     <div class="meal-entry">
-                      ${entry.product_name || entry.custom_text || 'Eintrag'}
+                      ${entry.product?.name || entry.custom_text || 'Eintrag'}
                       ${entry.group_label ? ` (${entry.group_label})` : ''}
                     </div>
                   `).join('')}
@@ -230,7 +230,7 @@ export function WeekPlanner({ year, week, className = '' }: WeekPlannerProps) {
                   <div class="meal-title">Vesper</div>
                   ${vesperEntries.map(entry => `
                     <div class="meal-entry">
-                      ${entry.product_name || entry.custom_text || 'Eintrag'}
+                      ${entry.product?.name || entry.custom_text || 'Eintrag'}
                       ${entry.group_label ? ` (${entry.group_label})` : ''}
                     </div>
                   `).join('')}
