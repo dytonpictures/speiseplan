@@ -136,7 +136,7 @@ export function WeekPlanner({ year, week, className = '' }: WeekPlannerProps) {
   }
 
   return (
-    <div className={className}>
+    <div className={className} aria-live="polite">
       {/* Error Banner */}
       {error && (
         <div className="bg-red-50 border border-red-200 rounded-md p-4 mb-6">

@@ -145,7 +145,8 @@ func seedProducts() error {
 
 		// Produkt-ID ermitteln
 		var productID int64
-		if productID, err = result.LastInsertId(); err != nil {
+		productID, err = result.LastInsertId()
+		if err != nil || productID == 0 {
 			// Wenn INSERT OR IGNORE nichts eingefügt hat, ID über SELECT holen
 			err = tx.Get(&productID, "SELECT id FROM products WHERE name = ?", product.Name)
 			if err != nil {

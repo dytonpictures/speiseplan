@@ -204,7 +204,7 @@ export function Sidebar({
                         : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
                     }`
                   }
-                  aria-current={({ isActive }) => isActive ? 'page' : undefined}
+                  end={item.to === '/'}
                 >
                   {item.icon}
                   <span className="ml-3">{item.name}</span>
@@ -257,7 +257,13 @@ function CopyWeekDialog({ targetYear, targetWeek, onCopy, onCancel }: CopyWeekDi
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div 
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Kalenderwoche kopieren"
+      onKeyDown={(e) => { if (e.key === 'Escape') onCancel(); }}
+    >
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
         <form onSubmit={handleSubmit}>
           <div className="p-6">

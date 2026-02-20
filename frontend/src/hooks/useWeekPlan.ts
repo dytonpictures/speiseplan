@@ -109,15 +109,12 @@ export function useWeekPlan(year: number, week: number) {
   // Eintrag bearbeiten
   const updateEntry = async (
     entryId: number,
-    day: WeekDay,
-    meal: MealType,
-    slot: number,
     productId?: number,
     customText?: string,
     groupLabel?: GroupLabel
   ): Promise<PlanEntry | null> => {
     try {
-      const updatedEntry = await UpdatePlanEntry(entryId, day, meal, slot, productId, customText, groupLabel);
+      const updatedEntry = await UpdatePlanEntry(entryId, productId, customText, groupLabel);
       
       // State aktualisieren
       setWeekPlan(prev => prev ? {

@@ -19,13 +19,6 @@ func main() {
 		log.Fatalf("Failed to initialize database: %v", err)
 	}
 
-	// Sicherstellen, dass die Datenbank ordnungsgemäß geschlossen wird
-	defer func() {
-		if err := CloseDatabase(); err != nil {
-			log.Printf("Error closing database: %v", err)
-		}
-	}()
-
 	// Create an instance of the app structure
 	app := NewApp()
 

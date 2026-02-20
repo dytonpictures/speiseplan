@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -79,7 +80,7 @@ func (u *Updater) DownloadUpdate(downloadURL string) error {
 // compareVersions vergleicht zwei Versionsstrings
 // Gibt -1 zurück wenn v1 < v2, 0 wenn v1 == v2, 1 wenn v1 > v2
 func compareVersions(v1, v2 string) int {
-	// Vereinfachter Versionsvergleich (nur für grundlegende Semantic Versioning)
+	// Semantic Versioning Vergleich mit numerischem Parsing
 	v1Parts := strings.Split(strings.TrimPrefix(v1, "v"), ".")
 	v2Parts := strings.Split(strings.TrimPrefix(v2, "v"), ".")
 
@@ -92,11 +93,22 @@ func compareVersions(v1, v2 string) int {
 	}
 
 	for i := 0; i < 3; i++ {
-		// Einfacher String-Vergleich (funktioniert für einstellige Zahlen)
-		if v1Parts[i] < v2Parts[i] {
+		n1, err1 := strconv.Atoi(v1Parts[i])
+		n2, err2 := strconv.Atoi(v2Parts[i])
+		if err1 != nil || err2 != nil {
+			// Fallback auf String-Vergleich
+			if v1Parts[i] < v2Parts[i] {
+				return -1
+			}
+			if v1Parts[i] > v2Parts[i] {
+				return 1
+			}
+			continue
+		}
+		if n1 < n2 {
 			return -1
 		}
-		if v1Parts[i] > v2Parts[i] {
+		if n1 > n2 {
 			return 1
 		}
 	}

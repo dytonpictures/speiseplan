@@ -124,22 +124,22 @@ export function useProducts() {
     const searchTerm = query.toLowerCase();
     return products.filter(product =>
       product.name.toLowerCase().includes(searchTerm) ||
-      product.allergens.some(a => a.name.toLowerCase().includes(searchTerm)) ||
-      product.additives.some(a => a.name.toLowerCase().includes(searchTerm))
+      (product.allergens || []).some(a => a.name.toLowerCase().includes(searchTerm)) ||
+      (product.additives || []).some(a => a.name.toLowerCase().includes(searchTerm))
     );
   };
 
   // Produkte nach Allergenen filtern
   const filterByAllergen = (allergenId: string): Product[] => {
     return products.filter(product =>
-      product.allergens.some(a => a.id === allergenId)
+      (product.allergens || []).some(a => a.id === allergenId)
     );
   };
 
   // Produkte nach Zusatzstoffen filtern
   const filterByAdditive = (additiveId: string): Product[] => {
     return products.filter(product =>
-      product.additives.some(a => a.id === additiveId)
+      (product.additives || []).some(a => a.id === additiveId)
     );
   };
 

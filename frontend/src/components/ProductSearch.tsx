@@ -24,6 +24,7 @@ export function ProductSearch({
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Filter products based on search query
   const filteredProducts = query.trim() 
@@ -95,7 +96,7 @@ export function ProductSearch({
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
         setIsOpen(false);
         setSelectedIndex(-1);
       }
@@ -116,7 +117,7 @@ export function ProductSearch({
   const showResults = isOpen && (filteredProducts.length > 0 || (allowCustom && query.trim()));
 
   return (
-    <div className={`relative ${className}`} role="combobox" aria-expanded={isOpen}>
+    <div ref={containerRef} className={`relative ${className}`} role="combobox" aria-expanded={isOpen}>
       <input
         ref={inputRef}
         type="text"

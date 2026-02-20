@@ -7,33 +7,8 @@ interface AdditivePickerProps {
   className?: string;
 }
 
-// Deutsche Namen für häufige Zusatzstoffe (E-Nummern)
-const ADDITIVE_NAMES: Record<string, string> = {
-  '1': 'Farbstoff',
-  '2': 'Konservierungsstoff', 
-  '3': 'Antioxidationsmittel',
-  '4': 'Geschmacksverstärker',
-  '5': 'Geschwefelt',
-  '6': 'Geschwärzt',
-  '7': 'Gewachst',
-  '8': 'Phosphat',
-  '9': 'Süßungsmittel',
-  '10': 'Phenylalaninquelle',
-  '11': 'Koffeinhaltig',
-  '12': 'Chininhaltig',
-  '13': 'Alkoholhaltig',
-  '14': 'Nitritpökelsalz',
-  '15': 'Milchsäure',
-  '16': 'Citronensäure',
-  '17': 'Ascorbinsäure',
-  '18': 'Tocopherol',
-  '19': 'Lecithin',
-  '20': 'Johannisbrotkernmehl',
-  '21': 'Guarkernmehl',
-  '22': 'Xanthan',
-  '23': 'Carrageen',
-  '24': 'Agar'
-};
+// Die Zusatzstoffe kommen direkt aus der DB mit id + name,
+// daher wird hier kein separates Mapping benötigt.
 
 export function AdditivePicker({ additives, selectedIds, onChange, className = '' }: AdditivePickerProps) {
   const handleToggle = (additiveId: string) => {
@@ -68,7 +43,7 @@ export function AdditivePicker({ additives, selectedIds, onChange, className = '
       >
         {sortedAdditives.map(additive => {
           const isSelected = selectedIds.includes(additive.id);
-          const displayName = ADDITIVE_NAMES[additive.id] || additive.name;
+          const displayName = additive.name;
           
           return (
             <label

@@ -18,18 +18,22 @@ export function getWeekFromDate(date: Date): { year: number; week: number } {
   const tempDate = new Date(date.valueOf());
   const dayNum = (tempDate.getDay() + 6) % 7; // Montag = 0
   
+  // Zum Donnerstag der gleichen Woche gehen (ISO 8601)
   tempDate.setDate(tempDate.getDate() - dayNum + 3);
   const firstThursday = tempDate.valueOf();
-  tempDate.setMonth(0, 1);
+  // Das ISO-Jahr ist das Jahr des Donnerstags
+  const isoYear = tempDate.getFullYear();
   
-  if (tempDate.getDay() !== 4) {
-    tempDate.setMonth(0, 1 + ((4 - tempDate.getDay()) + 7) % 7);
+  // Ersten Donnerstag des ISO-Jahres finden
+  const jan1 = new Date(isoYear, 0, 1);
+  if (jan1.getDay() !== 4) {
+    jan1.setMonth(0, 1 + ((4 - jan1.getDay()) + 7) % 7);
   }
   
-  const week = 1 + Math.ceil((firstThursday - tempDate.valueOf()) / 604800000); // 7 * 24 * 3600 * 1000
+  const week = 1 + Math.ceil((firstThursday - jan1.valueOf()) / 604800000); // 7 * 24 * 3600 * 1000
   
   return {
-    year: tempDate.getFullYear(),
+    year: isoYear,
     week: week
   };
 }
@@ -38,14 +42,13 @@ export function getWeekFromDate(date: Date): { year: number; week: number } {
  * Berechnet das erste Datum einer Kalenderwoche
  */
 export function getDateFromWeek(year: number, week: number): Date {
-  const date = new Date(year, 0, 1);
-  const dayOfWeek = date.getDay();
-  const daysToMonday = dayOfWeek <= 4 ? dayOfWeek - 1 : dayOfWeek - 8;
+  // Find Jan 4 (always in ISO week 1) then find its Monday
+  const jan4 = new Date(year, 0, 4);
+  const dayOfWeek = (jan4.getDay() + 6) % 7; // Monday = 0
+  const monday = new Date(jan4);
+  monday.setDate(jan4.getDate() - dayOfWeek + (week - 1) * 7);
   
-  date.setDate(date.getDate() - daysToMonday);
-  date.setDate(date.getDate() + (week - 1) * 7);
-  
-  return date;
+  return monday;
 }
 
 /**
@@ -103,9 +106,10 @@ export function getPrevWeek(year: number, week: number): { year: number; week: n
  * Berechnet die Anzahl Kalenderwochen in einem Jahr
  */
 export function getWeeksInYear(year: number): number {
-  const dec31 = new Date(year, 11, 31);
-  const week = getWeekFromDate(dec31);
-  return week.year === year ? week.week : week.week - 1;
+  // Dec 28 is always in the last ISO week of its year
+  const dec28 = new Date(year, 11, 28);
+  const week = getWeekFromDate(dec28);
+  return week.week;
 }
 
 /**

@@ -65,7 +65,7 @@ export function AllergenPicker({ allergens, selectedIds, onChange, className = '
                 type="checkbox"
                 checked={isSelected}
                 onChange={() => handleToggle(allergen.id)}
-                className="hidden"
+                className="sr-only"
                 aria-describedby={`allergen-${allergen.id}-description`}
               />
               

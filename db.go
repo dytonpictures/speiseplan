@@ -29,6 +29,10 @@ func InitDatabase() error {
 
 	db = database
 
+	// SQLite Pragmas setzen
+	db.MustExec("PRAGMA journal_mode=WAL")
+	db.MustExec("PRAGMA foreign_keys=ON")
+
 	// Schema erstellen
 	if err := createSchema(); err != nil {
 		return fmt.Errorf("failed to create schema: %w", err)

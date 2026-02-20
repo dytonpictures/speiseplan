@@ -40,8 +40,8 @@ type WeekPlan struct {
 type PlanEntry struct {
 	ID         int      `json:"id" db:"id"`
 	WeekPlanID int      `json:"week_plan_id" db:"week_plan_id"`
-	Day        int      `json:"day" db:"day"` // 0=Mo, 1=Di, 2=Mi, 3=Do, 4=Fr
-	Meal       string   `json:"meal" db:"meal"` // 'breakfast' oder 'snack'
+	Day        int      `json:"day" db:"day"` // 1=Mo, 2=Di, 3=Mi, 4=Do, 5=Fr
+	Meal       string   `json:"meal" db:"meal"` // 'fruehstueck' oder 'vesper'
 	Slot       int      `json:"slot" db:"slot"` // Reihenfolge innerhalb des Tages
 	ProductID  *int     `json:"product_id" db:"product_id"`
 	Product    *Product `json:"product,omitempty"`
@@ -53,8 +53,8 @@ type PlanEntry struct {
 type SpecialDay struct {
 	ID         int    `json:"id" db:"id"`
 	WeekPlanID int    `json:"week_plan_id" db:"week_plan_id"`
-	Day        int    `json:"day" db:"day"` // 0=Mo, 1=Di, ...
-	Type       string `json:"type" db:"type"` // 'holiday' oder 'closed'
+	Day        int    `json:"day" db:"day"` // 1=Mo, 2=Di, ...
+	Type       string `json:"type" db:"type"` // 'feiertag' oder 'schliesstag'
 	Label      *string `json:"label" db:"label"` // z.B. "Neujahr", "Teamtag"
 }
 
