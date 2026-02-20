@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 // Import der Wails-Funktionen (werden zur Laufzeit verfügbar sein)
 // @ts-ignore - Wails-Bindings werden zur Laufzeit generiert
-import { CheckForUpdate } from '../../wailsjs/go/main/App';
+import { CheckForUpdate, DownloadUpdate } from '../../wailsjs/go/main/App';
 
 interface UpdateInfo {
   available: boolean;
@@ -15,6 +15,8 @@ interface UpdateInfo {
 export function InfoPage() {
   const [updateInfo, setUpdateInfo] = useState<UpdateInfo | null>(null);
   const [checking, setChecking] = useState(false);
+  const [downloading, setDownloading] = useState(false);
+  const [downloadComplete, setDownloadComplete] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Handle checking for updates
@@ -32,10 +34,20 @@ export function InfoPage() {
     }
   };
 
-  // Handle opening download URL
-  const handleDownload = () => {
-    if (updateInfo?.download_url) {
-      window.open(updateInfo.download_url, '_blank');
+  // Handle downloading update
+  const handleDownloadUpdate = async () => {
+    if (!updateInfo?.download_url) return;
+    
+    setDownloading(true);
+    setError(null);
+    
+    try {
+      await DownloadUpdate(updateInfo.download_url);
+      setDownloadComplete(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Fehler beim Herunterladen des Updates');
+    } finally {
+      setDownloading(false);
     }
   };
 

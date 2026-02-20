@@ -1,9 +1,14 @@
 package main
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
+	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -39,6 +44,7 @@ type VersionResponse struct {
 	Version      string `json:"version"`
 	DownloadURL  string `json:"download_url"`
 	ReleaseNotes string `json:"release_notes"`
+	Checksum     string `json:"checksum"`
 }
 
 // CheckForUpdate prüft ob ein Update verfügbar ist
@@ -67,14 +73,73 @@ func (u *Updater) CheckForUpdate() (*UpdateInfo, error) {
 		LatestVersion:  versionResp.Version,
 		DownloadURL:    versionResp.DownloadURL,
 		ReleaseNotes:   versionResp.ReleaseNotes,
+		Checksum:       versionResp.Checksum,
 	}, nil
 }
 
-// DownloadUpdate lädt ein verfügbares Update herunter (Stub)
-func (u *Updater) DownloadUpdate(downloadURL string) error {
-	// TODO: Implementierung für das Herunterladen und Installieren von Updates
-	// Für Phase 1 nur ein Stub
-	return fmt.Errorf("update download not implemented yet")
+// DownloadUpdate lädt ein verfügbares Update herunter und verifiziert die Checksum
+func (u *Updater) DownloadUpdate(info UpdateInfo) (string, error) {
+	if info.DownloadURL == "" {
+		return "", fmt.Errorf("keine Download-URL vorhanden")
+	}
+
+	// Nur HTTPS erlauben
+	if !strings.HasPrefix(info.DownloadURL, "https://") {
+		return "", fmt.Errorf("nur HTTPS-Downloads sind erlaubt, URL: %s", info.DownloadURL)
+	}
+
+	// Temporäres Verzeichnis
+	tmpDir, err := os.MkdirTemp("", "speiseplan-update-*")
+	if err != nil {
+		return "", fmt.Errorf("temporäres Verzeichnis konnte nicht erstellt werden: %w", err)
+	}
+
+	// Dateiname aus URL
+	parts := strings.Split(info.DownloadURL, "/")
+	filename := parts[len(parts)-1]
+	if filename == "" {
+		filename = "speiseplan-update.exe"
+	}
+	destPath := filepath.Join(tmpDir, filename)
+
+	// Download
+	resp, err := u.HTTPClient.Get(info.DownloadURL)
+	if err != nil {
+		return "", fmt.Errorf("Download fehlgeschlagen: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return "", fmt.Errorf("Download-Server antwortete mit Status %d", resp.StatusCode)
+	}
+
+	outFile, err := os.Create(destPath)
+	if err != nil {
+		return "", fmt.Errorf("Datei konnte nicht erstellt werden: %w", err)
+	}
+	defer outFile.Close()
+
+	// Gleichzeitig schreiben und Hash berechnen
+	hasher := sha256.New()
+	writer := io.MultiWriter(outFile, hasher)
+
+	if _, err := io.Copy(writer, resp.Body); err != nil {
+		return "", fmt.Errorf("Download-Fehler: %w", err)
+	}
+	outFile.Close()
+
+	// SHA256 verifizieren
+	if info.Checksum != "" {
+		actualHash := hex.EncodeToString(hasher.Sum(nil))
+		expectedHash := strings.ToLower(strings.TrimSpace(info.Checksum))
+		if actualHash != expectedHash {
+			os.Remove(destPath)
+			return "", fmt.Errorf("Checksum-Fehler: erwartet %s, erhalten %s", expectedHash, actualHash)
+		}
+	}
+
+	msg := fmt.Sprintf("Update v%s wurde nach %s heruntergeladen. Bitte die App beenden und die neue Version starten.", info.LatestVersion, destPath)
+	return msg, nil
 }
 
 // compareVersions vergleicht zwei Versionsstrings

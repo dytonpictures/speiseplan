@@ -65,6 +65,7 @@ type UpdateInfo struct {
 	LatestVersion  string `json:"latest_version"`
 	DownloadURL    string `json:"download_url,omitempty"`
 	ReleaseNotes   string `json:"release_notes,omitempty"`
+	Checksum       string `json:"checksum,omitempty"` // SHA256
 }
 
 // ProductImport repräsentiert ein Produkt beim Import aus JSON

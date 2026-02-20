@@ -5,6 +5,10 @@ import { SpecialDayDialog } from './SpecialDayDialog';
 import { getWeekDays } from '../lib/weekHelper';
 import { useWeekPlan } from '../hooks/useWeekPlan';
 
+// Import der Wails-Funktionen (werden zur Laufzeit verfügbar sein)
+// @ts-ignore - Wails-Bindings werden zur Laufzeit generiert
+import { ExportPDF } from '../../wailsjs/go/main/App';
+
 interface WeekPlannerProps {
   year: number;
   week: number;
@@ -13,6 +17,9 @@ interface WeekPlannerProps {
 
 export function WeekPlanner({ year, week, className = '' }: WeekPlannerProps) {
   const [specialDayDialog, setSpecialDayDialog] = useState<{ day: WeekDay } | null>(null);
+  const [pdfExporting, setPdfExporting] = useState(false);
+  const [pdfSuccess, setPdfSuccess] = useState<string | null>(null);
+  const [pdfError, setPdfError] = useState<string | null>(null);
   
   const {
     weekPlan,
@@ -67,6 +74,35 @@ export function WeekPlanner({ year, week, className = '' }: WeekPlannerProps) {
   // Handle creating new week plan
   const handleCreateWeekPlan = async () => {
     await createWeekPlan();
+  };
+
+  // Handle PDF export
+  const handlePdfExport = async () => {
+    if (!weekPlan) return;
+    
+    setPdfExporting(true);
+    setPdfError(null);
+    setPdfSuccess(null);
+    
+    try {
+      // ExportPDF nimmt weekPlanID und outputPath - Go-Seite öffnet Save-Dialog mit leer-string
+      await ExportPDF(weekPlan.id, '');
+      setPdfSuccess('PDF wurde erfolgreich erstellt.');
+      
+      // Success-Nachricht nach 5 Sekunden ausblenden
+      setTimeout(() => {
+        setPdfSuccess(null);
+      }, 5000);
+    } catch (err) {
+      setPdfError(err instanceof Error ? err.message : 'Fehler beim Erstellen des PDFs');
+      
+      // Error-Nachricht nach 10 Sekunden ausblenden
+      setTimeout(() => {
+        setPdfError(null);
+      }, 10000);
+    } finally {
+      setPdfExporting(false);
+    }
   };
 
   // Loading state
@@ -173,14 +209,89 @@ export function WeekPlanner({ year, week, className = '' }: WeekPlannerProps) {
             Wochenplan KW {week} {year}
           </h1>
           
-          <div className="flex items-center space-x-2 text-sm text-gray-600">
-            <span>Erstellt: {new Date(weekPlan.created_at).toLocaleDateString('de-DE')}</span>
-            {loading && (
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary"></div>
-            )}
+          <div className="flex items-center space-x-4">
+            {/* PDF Export Button */}
+            <button
+              onClick={handlePdfExport}
+              disabled={pdfExporting || loading}
+              className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              aria-label="PDF-Datei vom Wochenplan erstellen"
+            >
+              {pdfExporting ? (
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+              ) : (
+                <span>📄</span>
+              )}
+              <span>{pdfExporting ? 'Erstelle PDF...' : 'PDF erstellen'}</span>
+            </button>
+            
+            <div className="flex items-center space-x-2 text-sm text-gray-600">
+              <span>Erstellt: {new Date(weekPlan.created_at).toLocaleDateString('de-DE')}</span>
+              {loading && (
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary"></div>
+              )}
+            </div>
           </div>
         </div>
       </div>
+
+      {/* PDF Success Banner */}
+      {pdfSuccess && (
+        <div className="bg-green-50 border border-green-200 rounded-md p-4 mb-6" aria-live="polite">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-green-800">
+                PDF erfolgreich erstellt
+              </h3>
+              <div className="mt-2 text-sm text-green-700">
+                {pdfSuccess}
+              </div>
+              <div className="mt-3">
+                <button
+                  onClick={() => setPdfSuccess(null)}
+                  className="text-sm text-green-800 hover:text-green-600 focus:outline-none focus:underline"
+                >
+                  Schließen
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* PDF Error Banner */}
+      {pdfError && (
+        <div className="bg-red-50 border border-red-200 rounded-md p-4 mb-6" aria-live="polite">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.996-.833-2.764 0L3.732 16c-.77.833.192 2.5 1.732 2.5z" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-red-800">
+                PDF-Export fehlgeschlagen
+              </h3>
+              <div className="mt-2 text-sm text-red-700">
+                {pdfError}
+              </div>
+              <div className="mt-3">
+                <button
+                  onClick={() => setPdfError(null)}
+                  className="text-sm text-red-800 hover:text-red-600 focus:outline-none focus:underline"
+                >
+                  Schließen
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Week Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-6">

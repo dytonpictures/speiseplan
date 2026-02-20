@@ -361,6 +361,18 @@ func (a *App) CheckForUpdate() (*UpdateInfo, error) {
 	return a.updater.CheckForUpdate()
 }
 
+// DownloadUpdate lädt ein verfügbares Update herunter
+func (a *App) DownloadUpdate() (string, error) {
+	info, err := a.updater.CheckForUpdate()
+	if err != nil {
+		return "", fmt.Errorf("Update-Check fehlgeschlagen: %w", err)
+	}
+	if !info.Available {
+		return "Kein Update verfügbar.", nil
+	}
+	return a.updater.DownloadUpdate(*info)
+}
+
 // HILFSFUNKTIONEN
 
 // loadProductRelations lädt Allergene und Zusatzstoffe für ein Produkt
