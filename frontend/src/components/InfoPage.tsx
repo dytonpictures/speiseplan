@@ -164,7 +164,7 @@ export function InfoPage() {
               </div>
             )}
 
-            {updateInfo && updateInfo.available && (
+            {updateInfo && updateInfo.available && !downloadComplete && (
               <div className="bg-blue-50 border border-blue-200 rounded-md p-4">
                 <div className="flex">
                   <div className="flex-shrink-0">
@@ -187,7 +187,7 @@ export function InfoPage() {
                       {updateInfo.release_notes && (
                         <div className="mt-3">
                           <p className="font-medium">Änderungen:</p>
-                          <div className="mt-1 text-xs bg-white p-2 rounded border">
+                          <div className="mt-1 text-xs bg-white p-2 rounded border max-h-32 overflow-y-auto">
                             <pre className="whitespace-pre-wrap">{updateInfo.release_notes}</pre>
                           </div>
                         </div>
@@ -197,13 +197,71 @@ export function InfoPage() {
                     {updateInfo.download_url && (
                       <div className="mt-4">
                         <button
-                          onClick={handleDownload}
-                          className="btn-primary"
+                          onClick={handleDownloadUpdate}
+                          disabled={downloading}
+                          className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                          aria-label="Update herunterladen"
+                          aria-describedby="download-status"
                         >
-                          Download starten
+                          {downloading && (
+                            <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                          )}
+                          <span>{downloading ? 'Wird heruntergeladen...' : 'Herunterladen'}</span>
                         </button>
+                        
+                        {downloading && (
+                          <div id="download-status" className="mt-2 text-xs text-blue-700" aria-live="polite">
+                            Update wird heruntergeladen und verifiziert. Dies kann einige Minuten dauern...
+                          </div>
+                        )}
                       </div>
                     )}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Download Complete State */}
+            {downloadComplete && (
+              <div className="bg-green-50 border border-green-200 rounded-md p-4">
+                <div className="flex">
+                  <div className="flex-shrink-0">
+                    <svg className="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div className="ml-3 flex-1">
+                    <h3 className="text-sm font-medium text-green-800">
+                      Update heruntergeladen
+                    </h3>
+                    <div className="mt-2 text-sm text-green-700">
+                      <p>
+                        Das Update auf Version <span className="font-mono">{updateInfo?.latest_version}</span> wurde erfolgreich heruntergeladen und die SHA256-Prüfsumme wurde verifiziert.
+                      </p>
+                      <p className="mt-2 font-medium">
+                        Bitte starten Sie die Anwendung neu, um das Update zu installieren.
+                      </p>
+                    </div>
+                    <div className="mt-4 flex space-x-3">
+                      <button
+                        onClick={() => window.location.reload()}
+                        className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors"
+                        aria-label="Anwendung neu starten"
+                      >
+                        Neu starten
+                      </button>
+                      
+                      <button
+                        onClick={() => setDownloadComplete(false)}
+                        className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors"
+                        aria-label="Später neu starten"
+                      >
+                        Später
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

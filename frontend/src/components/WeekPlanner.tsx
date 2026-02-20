@@ -105,6 +105,164 @@ export function WeekPlanner({ year, week, className = '' }: WeekPlannerProps) {
     }
   };
 
+  // Handle print preview
+  const handlePrintPreview = () => {
+    if (!weekPlan) return;
+
+    // Erstelle druckbares HTML
+    const printContent = `
+      <!DOCTYPE html>
+      <html lang="de">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Wochenplan KW ${week} ${year} - Druckvorschau</title>
+        <style>
+          * { margin: 0; padding: 0; box-sizing: border-box; }
+          body { 
+            font-family: Arial, sans-serif; 
+            font-size: 12px; 
+            line-height: 1.4; 
+            color: #000; 
+            background: white;
+            padding: 20px;
+          }
+          .header { 
+            text-align: center; 
+            margin-bottom: 30px; 
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+          }
+          .header h1 { 
+            font-size: 24px; 
+            margin-bottom: 5px; 
+          }
+          .week-grid { 
+            display: grid; 
+            grid-template-columns: repeat(5, 1fr); 
+            gap: 15px; 
+            margin-bottom: 30px;
+          }
+          .day-column { 
+            border: 1px solid #333; 
+            padding: 10px; 
+            min-height: 200px;
+          }
+          .day-header { 
+            font-weight: bold; 
+            font-size: 14px; 
+            margin-bottom: 10px; 
+            text-align: center;
+            border-bottom: 1px solid #666;
+            padding-bottom: 5px;
+          }
+          .meal-section { 
+            margin-bottom: 15px; 
+          }
+          .meal-title { 
+            font-weight: bold; 
+            margin-bottom: 5px; 
+            color: #333;
+          }
+          .meal-entry { 
+            margin-bottom: 3px; 
+            padding-left: 5px;
+          }
+          .special-day { 
+            background-color: #f5f5f5; 
+            padding: 5px; 
+            border-radius: 3px; 
+            margin-bottom: 5px;
+            text-align: center;
+            font-style: italic;
+          }
+          .footer {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+            text-align: center;
+            font-size: 10px;
+            color: #666;
+          }
+          @media print {
+            body { padding: 10px; }
+            .no-print { display: none !important; }
+          }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <h1>Wochenplan KW ${week} ${year}</h1>
+          <p>Erstellt am: ${new Date(weekPlan.created_at).toLocaleDateString('de-DE')}</p>
+        </div>
+        
+        <div class="week-grid">
+          ${weekDays.map((date, index) => {
+            const dayNumber = (index + 1) as WeekDay;
+            const dayName = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'][index];
+            const dateStr = date.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' });
+            
+            const specialDay = getSpecialDay(dayNumber);
+            const fruehstueckEntries = getEntriesForDay(dayNumber, 'fruehstueck');
+            const vesperEntries = getEntriesForDay(dayNumber, 'vesper');
+            
+            return `
+              <div class="day-column">
+                <div class="day-header">
+                  ${dayName}<br>
+                  ${dateStr}
+                </div>
+                
+                ${specialDay ? `<div class="special-day">${specialDay.label || specialDay.type}</div>` : ''}
+                
+                <div class="meal-section">
+                  <div class="meal-title">Frühstück</div>
+                  ${fruehstueckEntries.map(entry => `
+                    <div class="meal-entry">
+                      ${entry.product_name || entry.custom_text || 'Eintrag'}
+                      ${entry.group_label ? ` (${entry.group_label})` : ''}
+                    </div>
+                  `).join('')}
+                  ${fruehstueckEntries.length === 0 ? '<div class="meal-entry">-</div>' : ''}
+                </div>
+                
+                <div class="meal-section">
+                  <div class="meal-title">Vesper</div>
+                  ${vesperEntries.map(entry => `
+                    <div class="meal-entry">
+                      ${entry.product_name || entry.custom_text || 'Eintrag'}
+                      ${entry.group_label ? ` (${entry.group_label})` : ''}
+                    </div>
+                  `).join('')}
+                  ${vesperEntries.length === 0 ? '<div class="meal-entry">-</div>' : ''}
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+        
+        <div class="footer">
+          <p>Speiseplan erstellt mit Kita Speiseplan Software • ${new Date().toLocaleDateString('de-DE')}</p>
+        </div>
+        
+        <script>
+          // Auto-print when page loads
+          window.onload = function() {
+            setTimeout(() => window.print(), 500);
+          };
+        </script>
+      </body>
+      </html>
+    `;
+
+    // Öffne neues Fenster mit druckbarem Content
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+      printWindow.document.write(printContent);
+      printWindow.document.close();
+    }
+  };
+
   // Loading state
   if (loading && !weekPlan) {
     return (
@@ -223,6 +381,17 @@ export function WeekPlanner({ year, week, className = '' }: WeekPlannerProps) {
                 <span>📄</span>
               )}
               <span>{pdfExporting ? 'Erstelle PDF...' : 'PDF erstellen'}</span>
+            </button>
+
+            {/* Print Preview Button */}
+            <button
+              onClick={handlePrintPreview}
+              disabled={loading}
+              className="flex items-center space-x-2 px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              aria-label="Druckvorschau des Wochenplans anzeigen"
+            >
+              <span>🖨️</span>
+              <span>Vorschau</span>
             </button>
             
             <div className="flex items-center space-x-2 text-sm text-gray-600">
