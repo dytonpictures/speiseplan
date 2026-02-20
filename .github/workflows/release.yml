@@ -1,0 +1,101 @@
+name: Build & Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    name: 🏗️ Windows Build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install NSIS
+        run: sudo apt-get install -y nsis
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+
+      - name: Cross-compile for Windows (amd64)
+        env:
+          CGO_ENABLED: '0'
+          GOOS: windows
+          GOARCH: amd64
+        run: |
+          go build -ldflags="-s -w -H windowsgui" -o build/bin/speiseplan.exe .
+          echo "✅ Windows amd64 build complete"
+          ls -lh build/bin/speiseplan.exe
+
+      - name: Build NSIS Installer
+        working-directory: build/windows
+        run: |
+          makensis installer.nsi
+          ls -lh Speiseplan-Setup.exe
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          draft: false
+          prerelease: ${{ contains(github.ref_name, 'rc') || contains(github.ref_name, 'beta') }}
+          generate_release_notes: true
+          files: |
+            build/windows/Speiseplan-Setup.exe
+            build/bin/speiseplan.exe
+
+      - name: Push Release to Gitea
+        env:
+          GITEA_TOKEN: ${{ secrets.GITEA_TOKEN }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          if [ -z "$GITEA_TOKEN" ]; then
+            echo "⚠️ GITEA_TOKEN not set, skipping Gitea release"
+            exit 0
+          fi
+          
+          GITEA_API="https://git.supertoll.xyz/api/v1"
+          REPO="kita-ortrand/speiseplan"
+          
+          # Create Gitea release
+          RELEASE_ID=$(curl -s -X POST "$GITEA_API/repos/$REPO/releases" \
+            -H "Authorization: token $GITEA_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{\"tag_name\":\"$TAG_NAME\",\"name\":\"$TAG_NAME\",\"body\":\"Automatisch gebaut via GitHub Actions. Signiert.\",\"draft\":false,\"prerelease\":false}" \
+            | jq -r '.id')
+          
+          echo "Gitea Release ID: $RELEASE_ID"
+          
+          # Upload installer to Gitea
+          curl -s -X POST "$GITEA_API/repos/$REPO/releases/$RELEASE_ID/assets?name=Speiseplan-Setup.exe" \
+            -H "Authorization: token $GITEA_TOKEN" \
+            -H "Content-Type: application/octet-stream" \
+            --data-binary "@build/windows/Speiseplan-Setup.exe"
+          
+          # Upload standalone exe to Gitea
+          curl -s -X POST "$GITEA_API/repos/$REPO/releases/$RELEASE_ID/assets?name=speiseplan.exe" \
+            -H "Authorization: token $GITEA_TOKEN" \
+            -H "Content-Type: application/octet-stream" \
+            --data-binary "@build/bin/speiseplan.exe"
+          
+          echo "✅ Release pushed to Gitea"
