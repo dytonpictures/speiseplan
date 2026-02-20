@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-size: 16px;
+  }
+
+  body {
+    background-color: #f8fafc;
+    color: #1f2937;
+    line-height: 1.6;
+  }
+
+  /* Focus indicators für Barrierefreiheit */
+  *:focus {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+  }
+
+  /* Skip-to-content für Screenreader */
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: #2563eb;
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    border-radius: 4px;
+    z-index: 1000;
+  }
+  
+  .skip-link:focus {
+    top: 6px;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 text-base font-medium rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 min-h-[44px] min-w-[44px];
+  }
+
+  .btn-primary {
+    @apply btn bg-primary text-white hover:bg-blue-700 focus:ring-primary;
+  }
+
+  .btn-secondary {
+    @apply btn bg-white text-gray-700 border-gray-300 hover:bg-gray-50 focus:ring-gray-500;
+  }
+
+  .btn-danger {
+    @apply btn bg-danger text-white hover:bg-red-700 focus:ring-danger;
+  }
+
+  .input {
+    @apply block w-full px-3 py-2 text-base border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary min-h-[44px];
+  }
+
+  .card {
+    @apply bg-white rounded-lg shadow border border-gray-200 overflow-hidden;
+  }
+
+  .allergen-badge {
+    @apply inline-flex items-center px-2 py-1 text-xs font-medium rounded text-white;
+  }
+}
+
+@layer utilities {
+  .text-contrast-aa {
+    color: #1f2937; /* Mindestens 4.5:1 Kontrast auf weißem Hintergrund */
+  }
+}

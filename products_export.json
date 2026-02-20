@@ -1,0 +1,596 @@
+[
+  {
+    "name": "Apfel-/Aprikosenmus",
+    "multiline": false,
+    "allergens1": "",
+    "allergens2": ""
+  },
+  {
+    "name": "Apfel-/Bananenmus",
+    "multiline": false,
+    "allergens1": "",
+    "allergens2": ""
+  },
+  {
+    "name": "Apfelmus & Vanillesoße",
+    "multiline": true,
+    "allergens1": "c, g, A, E, F, G, MS, S, SR, SÜ, V",
+    "allergens2": ""
+  },
+  {
+    "name": "Bag. m. Wiener od. Salami-Sticks",
+    "multiline": true,
+    "allergens1": "a, c, i, j, k, A, E, F, GV, K, R,",
+    "allergens2": "SCH, SR, ST, SÜ, V"
+  },
+  {
+    "name": "Baguette mit Wiener",
+    "multiline": true,
+    "allergens1": "a, c, i, j, k, E, F, GV, K, R, SCH,",
+    "allergens2": "SR, ST, SÜ, V"
+  },
+  {
+    "name": "Baumkuchen",
+    "multiline": false,
+    "allergens1": "a, c, e, f, g, h, k,",
+    "allergens2": "E, FH, SR, SÜ"
+  },
+  {
+    "name": "belegte Baguettes",
+    "multiline": false,
+    "allergens1": "a, c, g, i, j, k,",
+    "allergens2": "E, F, GV, K, R, SCH, SR, ST, SÜ, V"
+  },
+  {
+    "name": "belegte Brötchen",
+    "multiline": false,
+    "allergens1": "a, c, g, i, j, k,",
+    "allergens2": "E, F, GV, K, R, SCH, SR, ST, SÜ, V"
+  },
+  {
+    "name": "belegtes Baguette",
+    "multiline": false,
+    "allergens1": "a, c, g, i, j, k,",
+    "allergens2": "E, F, GV, K, R, SCH, SR, ST, SÜ, V"
+  },
+  {
+    "name": "belegtes Toast",
+    "multiline": false,
+    "allergens1": "a, c, g, i, j, k,",
+    "allergens2": "E, F, GV, K, R, SCH, SR, ST, SÜ, V"
+  },
+  {
+    "name": "Bemmchen",
+    "multiline": true,
+    "allergens1": "a, c, f, g, h, i, j, k, m, B",
+    "allergens2": ""
+  },
+  {
+    "name": "Blätterteig-Zimtschnecken",
+    "multiline": true,
+    "allergens1": "a, c, B, E, S, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Brötchen mit süßem Aufstrich",
+    "multiline": true,
+    "allergens1": "a, c, g, B, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Butter",
+    "multiline": false,
+    "allergens1": "g",
+    "allergens2": ""
+  },
+  {
+    "name": "Cornflakes",
+    "multiline": false,
+    "allergens1": "a, e, g, f, h, k, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Donuts",
+    "multiline": false,
+    "allergens1": "a, h, B, E, ST, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Eier",
+    "multiline": false,
+    "allergens1": "c",
+    "allergens2": ""
+  },
+  {
+    "name": "Eierplätzchen",
+    "multiline": false,
+    "allergens1": "a, c, g, B",
+    "allergens2": ""
+  },
+  {
+    "name": "Eis",
+    "multiline": false,
+    "allergens1": "e, f, g, h, E, ST, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Erdbeerquark",
+    "multiline": false,
+    "allergens1": "g, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Filinchen",
+    "multiline": false,
+    "allergens1": "a, f, g, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Filinchen / Knäckebrot",
+    "multiline": false,
+    "allergens1": "a, f, g, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Filinchen mit Marmelade",
+    "multiline": true,
+    "allergens1": "a, c, f, g, B, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Frischkäse",
+    "multiline": false,
+    "allergens1": "g",
+    "allergens2": ""
+  },
+  {
+    "name": "Fruchtjoghurt",
+    "multiline": false,
+    "allergens1": "g, F, MS, SR, SÜ, V",
+    "allergens2": ""
+  },
+  {
+    "name": "Fruchtquark",
+    "multiline": false,
+    "allergens1": "g, F, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Fruchtreiswaffeln",
+    "multiline": false,
+    "allergens1": "f, g, h, k, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Fruchtriegel",
+    "multiline": false,
+    "allergens1": "e, f, g, h, k, F, S, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Fruchtzwerge",
+    "multiline": false,
+    "allergens1": "g, F, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Götterspeise mit Vanillesoße",
+    "multiline": true,
+    "allergens1": "g, SÜ, G, S, F, SV",
+    "allergens2": ""
+  },
+  {
+    "name": "Haferflocken",
+    "multiline": false,
+    "allergens1": "a",
+    "allergens2": ""
+  },
+  {
+    "name": "IKEA-Hot-Dogs",
+    "multiline": true,
+    "allergens1": "a, i, j, GV, K, S, ST, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Joghurt",
+    "multiline": false,
+    "allergens1": "g, E, MS, SR, SÜ, V",
+    "allergens2": ""
+  },
+  {
+    "name": "Joghurt mit Obstsalat",
+    "multiline": true,
+    "allergens1": "g, E, MS, SR, SÜ, V",
+    "allergens2": ""
+  },
+  {
+    "name": "Kekse",
+    "multiline": false,
+    "allergens1": "a, c, e, f, g, i, j, k,",
+    "allergens2": "B, E, F, SÜ, TM"
+  },
+  {
+    "name": "kleine Puddings",
+    "multiline": false,
+    "allergens1": "c, g, F, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "kleine Quarks",
+    "multiline": false,
+    "allergens1": "g, MS, SÜ, V",
+    "allergens2": ""
+  },
+  {
+    "name": "Kuchen",
+    "multiline": false,
+    "allergens1": "a, c, g, h, B, E, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Laugenbrezeln",
+    "multiline": false,
+    "allergens1": "a, g, k, SR",
+    "allergens2": ""
+  },
+  {
+    "name": "Laugengebäck",
+    "multiline": false,
+    "allergens1": "a, g, k, SR",
+    "allergens2": ""
+  },
+  {
+    "name": "Laugenstangen",
+    "multiline": false,
+    "allergens1": "a, g, k, SR",
+    "allergens2": ""
+  },
+  {
+    "name": "Leckermäulchen",
+    "multiline": false,
+    "allergens1": "g, F, G, MS, SÜ, V",
+    "allergens2": ""
+  },
+  {
+    "name": "Madeleines",
+    "multiline": false,
+    "allergens1": "a, c, g, B, FH, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Maisstangen (glutenfrei)",
+    "multiline": false,
+    "allergens1": "",
+    "allergens2": ""
+  },
+  {
+    "name": "Milch",
+    "multiline": false,
+    "allergens1": "g",
+    "allergens2": ""
+  },
+  {
+    "name": "Milch / Joghurt",
+    "multiline": false,
+    "allergens1": "g",
+    "allergens2": ""
+  },
+  {
+    "name": "Milchbrötchen",
+    "multiline": false,
+    "allergens1": "a, c, g, B, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Milchreis",
+    "multiline": false,
+    "allergens1": "g, MS, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "mini Paula",
+    "multiline": false,
+    "allergens1": "g, F, MS, ST, SÜ, V",
+    "allergens2": ""
+  },
+  {
+    "name": "Mini-Amerikaner",
+    "multiline": true,
+    "allergens1": "a, c, g, h, B, E, MS, SÜ, V",
+    "allergens2": ""
+  },
+  {
+    "name": "Mini-Berliner",
+    "multiline": false,
+    "allergens1": "a, c, g, h,",
+    "allergens2": "B, E, SR, SÜ, V"
+  },
+  {
+    "name": "Mini-Donuts",
+    "multiline": false,
+    "allergens1": "a, h, B, E, ST, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Mini-Eclairs",
+    "multiline": true,
+    "allergens1": "a, c, f, g, h, E, MS, ST, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Mini-Geflügelfrikadellen",
+    "multiline": true,
+    "allergens1": "a, c, j, B, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Mini-Götterspeise / Vanillesoße",
+    "multiline": true,
+    "allergens1": "g, SÜ, G, S, F, SV",
+    "allergens2": ""
+  },
+  {
+    "name": "Mini-Muffins",
+    "multiline": true,
+    "allergens1": "a, c, f, g, B, E, FH, SÜ, V",
+    "allergens2": ""
+  },
+  {
+    "name": "Mini-Quarkbällchen",
+    "multiline": true,
+    "allergens1": "a, c, g, h, B, E, St, SÜ, V",
+    "allergens2": ""
+  },
+  {
+    "name": "Mini-Windbeutel",
+    "multiline": false,
+    "allergens1": "a, c, g, h,",
+    "allergens2": "B, E, SR, SÜ, V"
+  },
+  {
+    "name": "Monte",
+    "multiline": false,
+    "allergens1": "g, h, MS, SÜ, V",
+    "allergens2": ""
+  },
+  {
+    "name": "Nutella",
+    "multiline": false,
+    "allergens1": "g, f, h, E, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Nutellabaguette",
+    "multiline": false,
+    "allergens1": "a, c, f, g,",
+    "allergens2": "E, SR, SÜ, V"
+  },
+  {
+    "name": "Nutellabrot",
+    "multiline": false,
+    "allergens1": "a, c, f, g,",
+    "allergens2": "E, SR, SÜ, V"
+  },
+  {
+    "name": "Nutella-Toast",
+    "multiline": false,
+    "allergens1": "a, c, f, g,",
+    "allergens2": "E, SR, SÜ, V"
+  },
+  {
+    "name": "Obst",
+    "multiline": false,
+    "allergens1": "",
+    "allergens2": ""
+  },
+  {
+    "name": "Obst / Gemüse",
+    "multiline": false,
+    "allergens1": "",
+    "allergens2": ""
+  },
+  {
+    "name": "Obstpause",
+    "multiline": false,
+    "allergens1": "",
+    "allergens2": ""
+  },
+  {
+    "name": "Obstsalat",
+    "multiline": false,
+    "allergens1": "",
+    "allergens2": ""
+  },
+  {
+    "name": "Pizzabrötchen",
+    "multiline": false,
+    "allergens1": "a, c, g, B",
+    "allergens2": ""
+  },
+  {
+    "name": "Plinse mit Zucker & Zimt",
+    "multiline": true,
+    "allergens1": "a, c, g, B, MS, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Pudding",
+    "multiline": false,
+    "allergens1": "c, g, F, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Quarkkuchen",
+    "multiline": true,
+    "allergens1": "a, c, g, h, B, E, MS, SÜ, V",
+    "allergens2": ""
+  },
+  {
+    "name": "Quarkspeise",
+    "multiline": false,
+    "allergens1": "g, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Reiswaffeln",
+    "multiline": false,
+    "allergens1": "f, g, k",
+    "allergens2": ""
+  },
+  {
+    "name": "Reiswaffeln mit Schokolade",
+    "multiline": true,
+    "allergens1": "f, g, k, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Rote Grütze & Vanillesoße",
+    "multiline": true,
+    "allergens1": "g, E, F, G, MS, S, SR, SÜ, V",
+    "allergens2": ""
+  },
+  {
+    "name": "Rührei",
+    "multiline": false,
+    "allergens1": "c, g",
+    "allergens2": ""
+  },
+  {
+    "name": "Rührkuchen",
+    "multiline": false,
+    "allergens1": "a, c, g, h, B, E, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Salzgebäck",
+    "multiline": false,
+    "allergens1": "a, c, g, k, B, SR",
+    "allergens2": ""
+  },
+  {
+    "name": "Schmierkäse",
+    "multiline": false,
+    "allergens1": "g, SCH, SR",
+    "allergens2": ""
+  },
+  {
+    "name": "Schnitt- & Schmierkäse",
+    "multiline": false,
+    "allergens1": "g, SCH, SR",
+    "allergens2": ""
+  },
+  {
+    "name": "Schnittkäse",
+    "multiline": false,
+    "allergens1": "g",
+    "allergens2": ""
+  },
+  {
+    "name": "Schokobrötchen",
+    "multiline": true,
+    "allergens1": "a, c, g, k, B ,E, SÜ, V",
+    "allergens2": ""
+  },
+  {
+    "name": "Schokopudding & Vanillesoße",
+    "multiline": true,
+    "allergens1": "c, g, E, F, G, MS, S, SR, SÜ, V",
+    "allergens2": ""
+  },
+  {
+    "name": "Stracciatella-Joghurt",
+    "multiline": true,
+    "allergens1": "g, MS, SR, SÜ, V",
+    "allergens2": ""
+  },
+  {
+    "name": "süßer Aufstrich",
+    "multiline": false,
+    "allergens1": "a, e, g, E, G, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "süßer Quark",
+    "multiline": false,
+    "allergens1": "g, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "süsses Baguette",
+    "multiline": false,
+    "allergens1": "a, c, f, g,",
+    "allergens2": "E, G, SR, SÜ, V"
+  },
+  {
+    "name": "süßes Toastbrot",
+    "multiline": true,
+    "allergens1": "a, c, g, B, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Toast Hawai",
+    "multiline": true,
+    "allergens1": "a, c, g, GV, K, SR, ST, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Toast mit Wiener",
+    "multiline": true,
+    "allergens1": "a, c, g, i, j, k, GV, K, SR, ST, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Toast überbacken",
+    "multiline": false,
+    "allergens1": "a, c, g, i, j, k,",
+    "allergens2": "E, F, GV, K, R, SCH, SR, ST, SÜ, V"
+  },
+  {
+    "name": "Vanillesoße",
+    "multiline": true,
+    "allergens1": "c, g, A, E, F, G, MS, S, SR, SÜ, V",
+    "allergens2": ""
+  },
+  {
+    "name": "verschiedenes Brot",
+    "multiline": false,
+    "allergens1": "a, c, k, B",
+    "allergens2": ""
+  },
+  {
+    "name": "Waffeln",
+    "multiline": false,
+    "allergens1": "a, c, m, B, E, FH, SR, SÜ",
+    "allergens2": ""
+  },
+  {
+    "name": "Wiener",
+    "multiline": false,
+    "allergens1": "i, j, E, F, GV,",
+    "allergens2": "K, SCH, SR, ST, V"
+  },
+  {
+    "name": "Wiener & Toastbrot",
+    "multiline": true,
+    "allergens1": "a, c, i, j, k, E, F, GV, K, R, SCH,",
+    "allergens2": "SR, ST, SÜ, V"
+  },
+  {
+    "name": "Wurst",
+    "multiline": false,
+    "allergens1": "i, j, E, F, GV, K, SR, ST, V",
+    "allergens2": ""
+  },
+  {
+    "name": "Würstchen im Schlafrock (Blätter-",
+    "multiline": true,
+    "allergens1": "teig) (a, c, g, i, j, E, F, GV,",
+    "allergens2": "B, E, K, S, SCH, SR, ST, SÜ, V"
+  },
+  {
+    "name": "Zwieback",
+    "multiline": false,
+    "allergens1": "a, B, M, SÜ",
+    "allergens2": ""
+  }
+]

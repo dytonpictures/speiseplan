@@ -1,0 +1,20 @@
+# Build
+build/
+speiseplan
+speiseplan.exe
+speiseplan.db
+
+# Go
+*.exe
+*.test
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Wails generated
+frontend/wailsjs/
+
+# OS
+.DS_Store
+Thumbs.db
